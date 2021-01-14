@@ -1,26 +1,28 @@
-<?php
-$name = $_POST['name'];
-$email = $_POST['email'];
-$message = $_POST['message'];
+<?php 
 
-$email_from = 'yashkalyani456@gmail.com';
+    if(isset($_POST['btn-send']))
+    {
+       $UserName = $_POST['UName'];
+       $Email = $_POST['Email'];
+       $Subject = $_POST['Subject'];
+       $Msg = $_POST['msg'];
 
-$subject = "New Form Submission";
+       if(empty($UserName) || empty($Email) || empty($Subject) || empty($Msg))
+       {
+           header('location:index.php?error');
+       }
+       else
+       {
+           $to = "admin@onlineittuts.com";
 
-$mailheader = "From: $email \r\n";
-
-$email_body = "User Name: $name.\n".
-                "User Email: $email.\n".
-                    "User Message: $message.\n";
-
-$recipient = "yk7335@tamu.edu";
-
-$headers = "Form: $email_from \r\n";
-
-$headers .= "Reply-To: $email \r\n";
-
-
-mail($recipient, $subject, $email_body, $headers) or die("Error!");
-header("Location: index.html");
-echo "Thank You!";
+           if(mail($to,$Subject,$Msg,$Email))
+           {
+               header("location:index.php?success");
+           }
+       }
+    }
+    else
+    {
+        header("location:index.php");
+    }
 ?>
